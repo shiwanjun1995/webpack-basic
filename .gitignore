@@ -1,0 +1,14 @@
+node_modules/
+.idea/
+.sass-cache/
+npm-debug.log.*
+node_tmp/
+.vscode
+Thumbs.db
+.DS_Store
+.svn
+package-lock.json
+.DS_Store
+*/.DS_Store
+.DS_Store
+dist/
