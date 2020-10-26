@@ -3,6 +3,8 @@
  * path是node.js的一个路径处理模块，不仅仅有path.resolve还有path.join等处理路径的方式，path.resolve操作类似于cd操作，就是一步一步查找，而__dirname则是获得当前文件所在目录的完整路径名
  */
 const path = require('path') // 引入path模块
+const HtmlWebpackPlugin = require('html-webpack-plugin') // 引入自动生成html文件的模块
+const {CleanWebpackPlugin} = require('clean-webpack-plugin') // 引入清理dist文件夹的模块
 
 // console.log(__dirname + '/src');
 // console.log(path.resolve(__dirname, '/src'));
@@ -11,10 +13,23 @@ const path = require('path') // 引入path模块
 
 module.exports = {
     // 入口起点
-    entry: './src/index.js',
+    // entry: './src/index.js',
+    // 多入口
+    entry: {
+        app: './src/index.js',
+        print: './src/print.js'
+    },
+    devtool: 'cheap-module-eval-source-map',
+    // 告知开发服务器(dev server)在哪里查找文件
+    devServer: {
+        contentBase: './dist',
+        port: 9000,
+        open: true
+    },
     // 出口
     output: {
-        filename: '[name].js', // 最终输出的文件名称
+        // 根据入口起点名称动态生成 bundle 名称
+        filename: '[name].bundle.js', // 最终输出的文件名称
         path: path.resolve(__dirname, './dist') // 输出目录的绝对路径
         /**
          * __dirname 表示的是当前文件的绝对路径
@@ -22,6 +37,8 @@ module.exports = {
          * 不加这个就会变成相对于当前工作目录的路径了
         */
     },
+    // 开发模式
+    mode: 'production',
     // loader
     module: {
         rules: [
@@ -33,6 +50,14 @@ module.exports = {
             {test: /.(woff|woff2|eot|ttf|otf)$/, use: ['url-loader']},
         ]
     },
+    // 扩展loader
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: '每次编译会自动在内存中生成一个html文件'
+        }),
+        // new CleanWebpackPlugin(['dist']),
+        new CleanWebpackPlugin()
+    ],
     // 加载图片后控制台会出现警告提示，提示文件过大影响性能
     // // 关闭webpack的性能提示
     // performance: {
