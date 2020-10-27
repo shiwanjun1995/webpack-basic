@@ -1,5 +1,5 @@
 // 这个是默认的入口文件 ./src下的index.js文件
-
+console.log('❤️❤️',`当前的环境是：${process.env.NODE_ENV}`)
 // 导入css文件
 import './style.css'
 
@@ -13,17 +13,17 @@ import printMe from './print.js'
 import {cube} from './math.js'
 
 function component() {
-    // var ele = document.createElement('div')
-    // ele.innerHTML = `<h1>Hello,Webpack</h1>`
+    var ele = document.createElement('div')
+    ele.innerHTML = `<h1>Hello,Webpack</h1>`
 
     /**
      * 4.将math计算数字的平方结果返回到页面上
     */
-   var ele = document.createElement('pre')
-   ele.innerHTML = [
-       'Hello webpack!',
-       '5 cubed is equal to ' + cube(5)
-   ].join('\n\n')
+//    var ele = document.createElement('pre')
+//    ele.innerHTML = [
+//        'Hello webpack!',
+//        '5 cubed is equal to ' + cube(5)
+//    ].join('\n\n')
 
     /**
      * 1.给当前的div添加css类名
