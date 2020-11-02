@@ -115,3 +115,182 @@ cnpm i -D url-loader
 ​	3.加载字体
 
 file-loader和url-loader可以接收并加载任何文件，然后将其输出到构建目录，也就是说，我们可以将它们用于任何类型的文件，包括字体。
+
+### 2.5.管理输出
+
+到目前为止，我们所做的一切都是在index.html文件中手动引入所有资源，然而随着应用程序的增长，使用了多个bundle的时候，需要手动地对index.html文件进行管理，一切就会变得困难起来。可以通过下载一些插件，让我们不用手动更改index.html文件。
+
+​	1.为你自动生成一个HTML文件，其中包括使用script标签的body中的所有webpack包。
+
+```js
+cnpm i -D html-webpack-plugin
+```
+
+由于过去的代码示例遗留下来，导致/dist文件夹相当杂乱，包含了之前的示例代码。webpack会生成文件，然后将这些文件放置在、dist文件夹中，但是webpack无法追踪到哪些文件是实际在项目中所需要使用到的。
+
+​	2.通常，在每次构建前清理/dist文件夹，是比较推荐的做法，因此只会生成用到的文件。
+
+```js
+cnpm i -D clean-webpack-plugin
+```
+
+现在，你不会看到旧的文件，只有构建后生成的文件。
+
+​	3.Manifest，webpack及其插件似乎“知道”应该哪些文件生成，答案是，通过manifest，webpack能够对【你的模块映射到输出bundle的过程】保持追踪。
+
+### 2.6.正式开发
+
+​	1.追踪错误和警告在源代码中的原始位置。
+
+For development, use `cheap-module-eval-source-map`. For production, use `cheap-module-source-map`.
+
+​	devtool: 'cheap-module-eval-source-map', // 这是 "cheap(低开销)" 的 source map。
+
+​	2.每次要编译代码时，手动运行 npm run build 就会变得很麻烦。
+
+```js
+cnpm i -D webpack-dev-server // 提供了一个简单的web服务器，并且能够实时重新加载(live reloading) 在代码发生变化后自动编译代码
+```
+
+​	修改配置文件，告诉开发服务器(dev server)，在哪里查找文件：告知webpack-dev-server，在localhost:8080下建立服务，将dist目录下的文件，作为可访问文件。
+
+```diff
++   devServer: {
++     contentBase: './dist'
++   },
+```
+
+​	Please update `webpack-cli` to v4 and use `webpack serve` to run webpack-dev-server
+
+### 2.7.模块热替换
+
+模块热替换(Hot Module Replacement 或 HMR)是 webpack 提供的最有用的功能之一。它允许在运行时更新各种模块，而无需进行完全刷新。
+
+### 2.8.tree shaking
+
+Tree Shaking指的就是当我引入一个模块的时候，我不引入这个模块的所有代码，我只引入我需要的代码，这就需要借助webpack里面自带的Tree Shaking这个功能，帮助我们实现。
+
+压缩输出：从 webpack 4 开始，也可以通过 `"mode"` 配置选项轻松切换到压缩输出，只需设置为 `"production"`。
+
+```diff
++ mode: "production"
+```
+
+## 三、生产环境
+
+### 3.1.生产环境构建
+
+开发环境(development)：需要强大的、具有实时重新加载(live reloading)或热模块(hot module replacement)能力的source map和localhost server。
+
+生产环境(production)：我们的目标倾向于关注更小的bundle，更轻量的source map，以及更优化的资源，以改善加载时间。
+
+由于这两个环境的构建目标差异很大，并且要遵循逻辑分离，我们通常建议为每个环境编写彼此独立的webpack配置。
+
+​	1.我们还是会遵循不重复原则(Don't repeat yourself - DRY)，保留一个“通用”配置。为了将这些配置合并在一起，我们使用“通用”配置。
+
+```js
+cnpm i -D webpack-merge
+```
+
+​	2.使用tree shaking
+
+```js
+cnpm i -D uglifyjs-webpack-plugin
+```
+
+```diff
++ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+```
+
+`UglifyJs` does not support ES6。可以使用 UglifyEs
+
+​	3.配置scripts
+
+- npm start 定义为开发环境脚本
+
+- npm run build 定义为生产环境脚本
+
+  4.指定环境
+
+  许多库library将通过与环境变量关联，以决定库中应该应用哪些内容。例如，当处于开发环境中，某些库为了使调试变得容易，可能会添加额外的日志记录和测试。
+
+  ```diff
+  +     new webpack.DefinePlugin({
+  +       'process.env.NODE_ENV': JSON.stringify('production')
+  +     })
+  ```
+
+  *技术上讲，*`NODE_ENV` *是一个由 Node.js 暴露给执行脚本的系统环境变量。通常用于决定在开发环境与生产环境(dev-vs-prod)下，服务器工具、构建脚本和客户端 library 的行为。*
+
+### 3.2.代码分离
+
+bundle分析输出结果。一款分析 bundle 内容的插件及 CLI 工具，以便捷的、交互式、可缩放的树状图形式展现给用户：
+
+```js
+cnpm i -D webpack-bundle-analyzer
+```
+
+通过使用 `output.filename` 进行[文件名替换](https://www.webpackjs.com/configuration/output#output-filename)，可以确保浏览器获取到修改后的文件。`[hash]` 替换可以用于在文件名中包含一个构建相关(build-specific)的 hash，但是更好的方式是使用 `[chunkhash]` 替换，在文件名中包含一个 chunk 相关(chunk-specific)的哈希。输出文件的文件名：
+
+```diff
++     filename: '[name].[chunkhash].js',
+```
+
+### 3.3.shimming
+
+webpack编译器能够识别遵循ES2015模块的语法、CommonJS或AMD规范编写的模块，然而，一些第三方的库(library)可能会引用一些全局依赖(例如jQuery中的$)。这些库也可能创建一些需要被导出的全局变量。这些“不合符规范的模块”就是shimming发挥作用的地方。
+
+​	1.使用 ProvidePlugin 后，能够在通过webpack编译的每个模块中，通过访问一个变量来获取package包。(如果webpack知道这个变量在某个模块中被使用了，那么webpack将在最终bundle中引入我们给定的package) 自动加载模块，而不必到处 import或require
+
+```diff
++   plugins: [
++     new webpack.ProvidePlugin({
++       _: 'lodash'
++     })
++   ]
+```
+
+shim是一个库，它将一个新的API引入到旧的环境中，并且仅依靠旧环境中已有的手段实现。polyfil就是一个用在浏览器API上的shim。我们通常的做法是先检查当前浏览器是否支持某个API，如果不支持的话就加载对应的polyfill。然后新旧浏览器就都可以使用这个API了。
+
+3.2.渐进式网络应用程序(PWA)
+
+Progressive Web Application 是一种可以提供类似于原生应用程序体验的网络应用程序。PWA可以用来在离线时能够继续运行功能。
+
+​	1.搭建一个简易服务器，真正的用户是通过网络访问网络应用程序；用户的浏览器会与一个提供所需资源(例如 html、js和css文件)的服务器通讯。
+
+```js
+cnpm i -D http-server
+```
+
+### 3.4.使用环境变量
+
+要在开发和生产构建之间，消除webpack.config.js的差异，你可能需要环境变量。
+
+直接在命令行环境配置中，通过设置--env并传入尽可能多的环境变量。
+
+```bash
+webpack --env.NODE_ENV=local --env.production --progress
+```
+
+## 四、项目报错处理
+
+1. Error: Cannot find module 'webpack-cli/bin/config-yargs'
+
+报错前安装的版本为：
+
+```js
+"webpack": "4.4.1",
+"webpack-cli": "^4.1.0",
+"webpack-dev-server": "^3.11.0",
+```
+
+原因为webpack新版本并不与现有版本兼容(webpack-cli几天前发布的最新版4.0.0版移除了yargs包，而紧挨4.0.0版本的上一正式版本3.3.12还在：)去寻找适合webpack4的webpack-cli和webpack-dev-server
+
+```js
+"webpack": "4.4.1",
+"webpack-cli": "^3.3.2",
+"webpack-dev-server": "^3.11.0",
+```
+
+新版本尤其是大的版本更新都改变了很多，很多都从架构上进行了更改，老版本的功能包比如webpack-dev-server就不能兼容新版本的webpack了。那么我们是不是就不能使用最新版本的webpack了？其实不是，想用就要么等兼容版本，要么有精力自己搞一个兼容版本，再或者可以搜索相关功能适合最新webpack的解决方案。
+

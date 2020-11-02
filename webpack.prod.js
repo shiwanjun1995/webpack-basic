@@ -7,9 +7,8 @@ const webpack = require("webpack")
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // 引入打包分析插件
 
 module.exports = function (env) {
-    console.log('--打包环境--',env);
-    return merge(common(), {
-        devtool: 'source-map',
+    // console.log('--打包环境--',env);
+    return merge(common(env), {
         plugins: [
             new UglifyJSPlugin({
                 cache: true,
