@@ -18,7 +18,14 @@ module.exports = function (env) {
             path: path.resolve(__dirname, './dist') // 目录对应一个绝对路径
         },
         // 模块规则(配置loader、解析器等选项) loader use 执行顺序从右到左 从下往上
+        /**
+         * 这些选项决定了如何处理项目中的不同类型的模块
+        */
         module: {
+            /**
+             * 创建模块时，匹配请求的规则数组。这些规则能够修改模块的创建方式，这些规则能够
+             * 对模块(module)应用loader，或者修改解析器(parser)。
+            */
             rules: [
                 {
                     test: /\.js$/,
@@ -30,17 +37,27 @@ module.exports = function (env) {
                 { test: /.(woff|woff2|eot|ttf|otf)$/, use: ['url-loader'] }, // 解析字体
             ]
         },
-        // 解析模块请求的选项(不适用于对loader解析)
+        // 配置模块如何解析(不适用于对loader解析)
+        /**
+         * 例如，当在 ES2015 中调用 import "lodash"，
+         * resolve 选项能够对 webpack 查找 "lodash" 的方式去做修改
+        */
         resolve: {
-            extensions: [".js"], // 书写的时候可以省略后缀
+            extensions: [".js",".json"], // 书写的时候可以省略后缀，自动解析确定的扩展
             // 配置别名 便于书写(模块别名相对于当前上下文导入)
+            /**
+             * 创建 import 或 require的别名，来确保模块引入变得更简单
+             * 例如，一些位于src/文件夹下的常用模块
+            */
             alias: {
                 "@": path.resolve(__dirname, "./src"),
             },
         },
+        // 用于以各种方式自定义webpack构建过程，并且webpack附带了各种内置插件
         plugins: [
             new HtmlWebpackPlugin({
-                title: '1.开发环境和正式环境的命令行配置'
+                title: '1.开发环境和正式环境的命令行配置',
+                template: './index.html'
             }),
             new CleanWebpackPlugin()
         ],
@@ -48,7 +65,20 @@ module.exports = function (env) {
         devtool: env.dev ? 'cheap-module-eval-source-map' : 'none',
         // 此项配置是用来定制watch模式的选项(监听文件变化，当它们修改后会重新编译)
         watchOptions: {
-            ignored: path.resolve("node_modules")
+            ignored: path.resolve("./node_modules")
+        },
+        // 外部扩展 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)。
+        /**
+         * 如果我们想引用一个库，但是又不想让webpack打包，
+         * 并且又不影响我们在程序中以CMD、AMD或者window/global全局等方式进行使用，
+         * 那就可以通过配置externals。
+         */
+        externals: {
+            // 将外部变量或者模块加载进来
+            // 无需打包的配置,代表这是外部引入的，无需打包
+            // 这个里面的jquery是指require('jquery')或者通过其它方式中引用的jquery，而jQuery就是scripts源代码中最终暴露出来的全局对象
+            jquery: 'jQuery',
+
         },
         stats: {
             children: false, // 添加 children 信息

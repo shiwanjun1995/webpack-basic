@@ -12,6 +12,9 @@ import printMe from './print.js'
 // 导入math
 import {cube} from './math.js'
 
+// 导入jquery
+import $ from 'jquery';
+
 function component() {
     var ele = document.createElement('div')
     ele.innerHTML = `<h1>Hello,Webpack</h1>`
@@ -45,7 +48,13 @@ function component() {
     btn.onclick = printMe
     ele.appendChild(btn)
 
-    
+    var btn2 = document.createElement('button')
+    var $btn2 = $(btn2)
+    $btn2.html('jQuery功能的按钮')
+    $(btn2).click(function (e) {
+        console.log('❤️❤️',e);
+    });
+    ele.append(btn2)
 
     return ele
 }
