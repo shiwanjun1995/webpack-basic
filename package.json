@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --env.prod --mode=production --config webpack.prod.js",
-    "start": "webpack-dev-server --env.dev --config webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --env.prod --mode=production --config webpack.prod.js",
+    "start": "cross-env NODE_ENV=11 webpack-dev-server --env.dev --config webpack.dev.js",
     "http": "http-server dist"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.12.1",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.2",
     "css-loader": "^5.0.0",
     "file-loader": "^6.1.1",
     "html-webpack-plugin": "^4.5.0",

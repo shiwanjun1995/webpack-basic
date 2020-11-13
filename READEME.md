@@ -272,6 +272,20 @@ cnpm i -D http-server
 webpack --env.NODE_ENV=local --env.production --progress
 ```
 
+### 3.5.配置process.env
+
+通常情况下，我们需要针对不同环境(开发环境、集成环境、生产环境等)，进行相应策略的配置(比如是否替换接口地址，代码是否进行压缩等)。webpack就是通过process.env这个属性进行区别的。它是Node.js提供的一个API，它返回的是一个包含用户环境信息的独一性。如果我们给Node.js设置一个环境变量·，并把它挂载到process.env返回的对象上，便可以在代码中进行相应环境的判断。
+
+通常的做法是，新建一个环境变量NODE_ENV，用它确定当前所处的开发阶段，生产阶段设为production，开发阶段设为development或staging，然后在脚本中读取process.env.NODE_ENV即可。要说明的是，NODE_ENV 这个名称只是开发社区的一种共识，名称内容是可以修改的。
+
+由于Windows和Mac系统有区别，这就会到值我在Windows上开发部署的项目，到了Mac系统下就无法使用了，反之依然。为了解决这个问题，引入cross-env。它是一个跨平台设置环境变量的第三方包，它可以让你一行命令，就能轻松地在多个平台设置环境变量。
+
+```js
+cnpm i -D cross-env
+```
+
+然后package.json文件中配置就可以了。在项目中可以根据这个值来区分当前环境。
+
 ## 四、项目报错处理
 
 1. Error: Cannot find module 'webpack-cli/bin/config-yargs'
