@@ -8,8 +8,10 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin") // 自动清理di
 module.exports = function (env) {
     console.log('公共模块配置，当前的环境是',env,arguments);
     return {
+        mode: 'development', // 开发模式
         entry: {
-            app:'./src/index.js'
+            app: path.resolve(__dirname, './src/index.js'), // 入口文件
+            header: path.resolve(__dirname, './src/header.js'), // 再添加一个入口文件，形成多文件入口文件的格式
         },
         // 指示webpack如何去输出、以及在哪里输出你的 [bundle、asset和其他你所打包或使用webpack载入的任何内容]
         output: {
@@ -32,7 +34,10 @@ module.exports = function (env) {
                     exclude: /node_modules/, // 确保转译竟可能少的文件
                     use: ['babel-loader?cacheDirectory'] // 将babel-loader提速至少两倍，将转译的结果缓存到文件系统中 将使用默认的缓存目录(node_modules/.cache/babel-loader)
                 },
-                { test: /\.css$/, use: ['style-loader','css-loader'] }, // 解析css
+                {
+                    test: /\.css$/,
+                    use: ['style-loader','css-loader','postcss-loader']
+                }, // 解析css
                 { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] }, // 解析图片
                 { test: /.(woff|woff2|eot|ttf|otf)$/, use: ['url-loader'] }, // 解析字体
             ]
@@ -56,8 +61,14 @@ module.exports = function (env) {
         // 用于以各种方式自定义webpack构建过程，并且webpack附带了各种内置插件
         plugins: [
             new HtmlWebpackPlugin({
-                title: '1.开发环境和正式环境的命令行配置',
-                template: './index.html'
+                template: './index.html', // webpack模板的相对或绝对路径
+                filename: 'index.html', // 生成的文件名默认为 index.html
+                chunks: ['app'],
+            }),
+            new HtmlWebpackPlugin({
+                template: './header.html',
+                filename: 'header.html',
+                chunks: ['header'], // 与入口文件对应的模块名
             }),
             new CleanWebpackPlugin()
         ],
