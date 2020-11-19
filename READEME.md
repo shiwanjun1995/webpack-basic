@@ -13,7 +13,7 @@ webpack 是一个模块打包器(module bundler)。它将根据模块的依赖�
 1. 通过output.filename: 告诉webpack bundle的名称；
 2. 通过output.path:告诉webpack bundle生成(emit)到哪里。
 
-### 1.3.loader
+### 1.3.加载器(loader)
 
 让webpack能够去处理那些非js文件(webpack自身只能处理js)，loader可以将所有类型的文件转换为webpack能够处理的模块(modules)。
 
@@ -307,4 +307,31 @@ cnpm i -D cross-env
 ```
 
 新版本尤其是大的版本更新都改变了很多，很多都从架构上进行了更改，老版本的功能包比如webpack-dev-server就不能兼容新版本的webpack了。那么我们是不是就不能使用最新版本的webpack了？其实不是，想用就要么等兼容版本，要么有精力自己搞一个兼容版本，再或者可以搜索相关功能适合最新webpack的解决方案。
+
+## 五、插件详解
+
+### 5.1.预处理器postcss-loader
+
+用postcss处理css的loader，利用js代码来处理css，负责把css代码解析成抽象语法树结构，再交由插件来进行处理，插件基于css代码的AST所能进行的操作是多种多样的，比如增加浏览器相关的声明前缀。
+
+### 5.2.后处理程序autoPrefixer
+
+是一个流行的PostCss插件，其作用是为css中的属性添加浏览器特定的前缀，开发人员在编写css时只需要使用css规范中的标准属性名即可。
+
+```
+#content {
+	display: flex;
+}
+```
+
+在经过 Autoprefixer 处理之后得到的css：
+
+```
+#content {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+```
 
