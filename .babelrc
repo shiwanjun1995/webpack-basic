@@ -1,5 +1,19 @@
+// {
+//     "presets": ["@babel/preset-env"]
+// }
+
 {
-    "presets": [
-        "@babel/preset-env"
+    "presets": [ // 预设
+        [
+            "@babel/preset-env",
+            {
+                "targets": { // 需要支持哪些平台+哪些版本
+                    // 针对浏览器版本的配置
+                    "browsers" : ["> 1%", "ie >= 9", "chrome >= 60", "ios >= 9", "android >= 4.0", "last 2 versions"]
+
+                },
+                "useBuiltIns": "usage"
+            }
+        ]
     ]
 }

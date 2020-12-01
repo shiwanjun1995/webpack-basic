@@ -335,3 +335,81 @@ cnpm i -D cross-env
 }
 ```
 
+### 5.3.拆分css
+
+webpack4.0以前，我们通过extract-text-webpack-plugin插件，把css样式从js文件中提取到单独的css文件中。webpack4.0以后，官方推荐使用mini-css-extract-plugin插件来打包css文件，会将所有的css样式合并为一个css文件。
+
+配置文件如下：
+
+```js
+module: {
+    rules: [
+        // 这个插件应该只在生产环境构建中使用，并且在loader链中不应该有style-loader，特别是我们在开发模式中使用HMR时
+        {
+            test: /\.css$/,
+            use: [ MiniCssExtractPlugin.loader,'css-loader','postcss-loader' ]
+        }
+    ],
+},
+```
+
+### 5.4.用babel转译js文件
+
+为了使我们的js代码能够兼容更多的环境我们需要安装依赖
+
+1. babel-loader：加载ES2015+代码，然后使用Babel(一个js编译器，让你立即使用下一代的js)转译为ES5，是一个npm包，它使得webpack可以通过babel转译js代码。
+
+   ```json
+   注释：（在 babel 7 中 `babel-core` 和 `babel-preset` 被建议使用 `@babel` 开头声明作用域，因此应该分别下载 `@babel/core` 和`@babel/presets`。就类似于 vue-cli 升级后 使用@vue/cli一样的道理 ）Babel的功能在于【代码转译】，具体一点，就是将目标代码转译为能够符合期望语法规范的代码。在转译的过程中，babel内部经历了【解析-转换-生成】三个步骤。而`@babel/core`这个库则负责【解析】，具体的【转换】和【生成】步骤则交给各种插件(plugin)和预设(preset)来完成。
+   ```
+
+2. @babel/core：如果你需要以编程的方式来使用Babel，可以使用这个包。
+
+   ```json
+   注释：（`@babel/core`的作用是把js代码分析成ast树，方便各个插件分析语法进行相应的处理。有些新语法在低版本js中是不存在的，比如箭头函数，reset函数，函数默认值等，这种语言层面的不兼容只能通过将代码转为ast，分析其语法后再转为低版本的js）
+   ```
+
+3. @babel/preset-env：智能预设，是一系列插件的集合，可以根据配置的目标浏览器或者运行环境来按需加载插件。
+
+   ```json
+   注释：（实际上就是各种插件的打包组合，包含了我们在babel7中常用的es2015,es2016, es2017等最新的语法转化插件，允许我们使用最新的js语法，比如let、const、箭头函数等等，但不包括stage-x阶段的插件。也就是说各种转译规则的统一设定，目的是告诉loader要以什么规则来转化成对应的js版本）
+   ```
+
+   `babel-loader`与`babel-core`的版本对应关系
+
+   1. `babel-loader` 8.x 对应`babel-core` 7.x
+   2. `babel-loader` 7.x 对应`babel-core` 6.x
+
+   配置文件如下：
+
+   ```js
+   module: {
+       // 创建模块时，匹配请求的规则数组。这些规则能够修改模块的创建方式，这些规则能够对模块(module)应用loader，或者修改解析器(parser)。
+       rules: [
+           {
+               test: /\.js$/,
+               exclude: /node_modules/, // 确保转译尽可能少的文件
+               use: ['babel-loader?cacheDirectory'] // 将babel-loader提速至少两倍，将转译的结果缓存到文件系统中 将使用默认的缓存目录(node_modules/.cache/babel-loader)
+           },
+           { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] }, // 解析图片
+           { test: /.(woff|woff2|eot|ttf|otf)$/, use: ['url-loader'] }, // 解析字体
+       ]
+   },
+   ```
+
+   你需要创建一个.babelrc文件，让它实际执行操作：
+
+   ```json
+   {
+       "presets": ["@babel/preset-env"]
+   }
+   ```
+
+   上面的babel-loader只会讲ES6/7/8语法转换为ES5语法，但是对新的api并不会转换，例如(Promise、Generator、Set、Maps、Proxy等)，此时我们需要借助babel-polyfill来帮助我们转换：
+
+   ```js
+   cnpm i -S @babel/polyfill
+   ```
+
+   因为polyfill要在编译你的源代码之前执行，所以要安装为dependency而不是devDependency，解决低版本浏览器(比如IE)不兼容问题。
+

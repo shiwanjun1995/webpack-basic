@@ -13,6 +13,11 @@ module.exports = function (env) {
             app: path.resolve(__dirname, './src/index.js'), // 入口文件
             header: path.resolve(__dirname, './src/header.js'), // 再添加一个入口文件，形成多文件入口文件的格式
         },
+        // 在低版本IE浏览器中兼容
+        // entry: {
+        //     app: ['@babel/polyfill',path.resolve(__dirname, './src/index.js')],
+        //     header: ['@babel/polyfill',path.resolve(__dirname, './src/header.js')],
+        // },
         // 指示webpack如何去输出、以及在哪里输出你的 [bundle、asset和其他你所打包或使用webpack载入的任何内容]
         output: {
             // chunkhash只能用在生产环境不能用在开发环境
@@ -31,7 +36,7 @@ module.exports = function (env) {
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: /node_modules/, // 确保转译竟可能少的文件
+                    exclude: /node_modules/, // 确保转译尽可能少的文件
                     use: ['babel-loader?cacheDirectory'] // 将babel-loader提速至少两倍，将转译的结果缓存到文件系统中 将使用默认的缓存目录(node_modules/.cache/babel-loader)
                 },
                 { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] }, // 解析图片
