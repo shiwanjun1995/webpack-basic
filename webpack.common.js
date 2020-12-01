@@ -34,10 +34,6 @@ module.exports = function (env) {
                     exclude: /node_modules/, // 确保转译竟可能少的文件
                     use: ['babel-loader?cacheDirectory'] // 将babel-loader提速至少两倍，将转译的结果缓存到文件系统中 将使用默认的缓存目录(node_modules/.cache/babel-loader)
                 },
-                {
-                    test: /\.css$/,
-                    use: ['style-loader','css-loader','postcss-loader']
-                }, // 解析css
                 { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] }, // 解析图片
                 { test: /.(woff|woff2|eot|ttf|otf)$/, use: ['url-loader'] }, // 解析字体
             ]

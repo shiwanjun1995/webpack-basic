@@ -9,6 +9,15 @@ module.exports = function (env) {
     // console.log('---开发环境---',env);
     // 传入环境变量 函数的参数
     return merge(common(env), {
+        module: {
+            rules: [
+                // 解析css
+                {
+                    test: /\.css$/,
+                    use: ['style-loader','css-loader','postcss-loader']
+                }
+            ]
+        },
         devServer: {
             contentBase: path.join(__dirname, "dist"), // 告诉服务器从哪里提供内容(推荐使用绝对路径)
             compress: true, // 一切服务都启用gzip压缩
@@ -32,6 +41,5 @@ module.exports = function (env) {
                 }
             },
         },
-        
     })
 }
