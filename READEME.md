@@ -405,11 +405,13 @@ module: {
    }
    ```
 
-   上面的babel-loader只会讲ES6/7/8语法转换为ES5语法，但是对新的api并不会转换，例如(Promise、Generator、Set、Maps、Proxy等)，此时我们需要借助babel-polyfill来帮助我们转换：
+   上面的babel-loader只会将ES6/7/8语法转换为ES5语法，但是对新的api并不会转换，例如(Promise、Generator、Set、Maps、Proxy等)，此时我们需要借助babel-polyfill来帮助我们转换：
 
    ```js
    cnpm i -S @babel/polyfill
    ```
 
    因为polyfill要在编译你的源代码之前执行，所以要安装为dependency而不是devDependency，解决低版本浏览器(比如IE)不兼容问题。
+
+## 六、搭建vue环境
 

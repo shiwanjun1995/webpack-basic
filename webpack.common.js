@@ -65,6 +65,8 @@ module.exports = function (env) {
                 template: './index.html', // webpack模板的相对或绝对路径
                 filename: 'index.html', // 生成的文件名默认为 index.html
                 chunks: ['app'],
+                inject: true,
+                favicon: path.resolve(__dirname, './static/favicon.ico')   // 加上这个
             }),
             new HtmlWebpackPlugin({
                 template: './header.html',

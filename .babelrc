@@ -12,6 +12,7 @@
                     "browsers" : ["> 1%", "ie >= 9", "chrome >= 60", "ios >= 9", "android >= 4.0", "last 2 versions"]
 
                 },
+                // 按需引入 减少打包后的JS文件
                 "useBuiltIns": "usage"
             }
         ]
