@@ -3,6 +3,7 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin") // 自动生成html的插件
 const { CleanWebpackPlugin } = require("clean-webpack-plugin") // 自动清理dist文件夹的插件
+const VueLoaderPlugin = require('vue-loader/lib/plugin') // 将定义过的其它规则复制并应用到.vue文件里相应的语言块
 
 // 如果要接收环境变量的话 需要从对象改成函数
 module.exports = function (env) {
@@ -39,6 +40,7 @@ module.exports = function (env) {
                     exclude: /node_modules/, // 确保转译尽可能少的文件
                     use: ['babel-loader?cacheDirectory'] // 将babel-loader提速至少两倍，将转译的结果缓存到文件系统中 将使用默认的缓存目录(node_modules/.cache/babel-loader)
                 },
+                { test: /\.vue$/, use: ['vue-loader'] }, //解析后缀为.vue文件
                 { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] }, // 解析图片
                 { test: /.(woff|woff2|eot|ttf|otf)$/, use: ['url-loader'] }, // 解析字体
             ]
@@ -73,7 +75,8 @@ module.exports = function (env) {
                 filename: 'header.html',
                 chunks: ['header'], // 与入口文件对应的模块名
             }),
-            new CleanWebpackPlugin()
+            new CleanWebpackPlugin(),
+            new VueLoaderPlugin(), // 将vue-loader应用到所有后缀名为.vue文件之上
         ],
         // 提供源代码映射文件供调试使用
         devtool: env.dev ? 'cheap-module-eval-source-map' : 'none',

@@ -27,6 +27,8 @@
     "style-loader": "^2.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.1",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
     "webpack": "^4.4.1",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^3.3.2",
@@ -34,6 +36,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.12.1"
+    "@babel/polyfill": "^7.12.1",
+    "vue": "^2.6.12"
   }
 }

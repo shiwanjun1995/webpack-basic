@@ -59,4 +59,17 @@ function component() {
     return ele
 }
 
-document.body.appendChild(component())
+// document.body.appendChild(component())
+
+// 引入vue
+import Vue from 'vue'
+// console.log('❤️❤️',Vue);
+import Hello from '@/components/Hello.vue'
+
+new Vue({
+    // 不需要编译器
+    render: h => h(Hello)
+
+    // 需要编译器 (挂载到一个元素上并以其 DOM 内部的 HTML 作为模板))
+    // template: '<Hello></Hello>'
+}).$mount('#app')

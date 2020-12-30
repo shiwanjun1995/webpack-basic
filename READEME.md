@@ -415,3 +415,48 @@ module: {
 
 ## 六、搭建vue环境
 
+### 6.1.加载和转译Vue组件
+
+vue-loader 是webpack的一个预处理器，它允许你以一种成为单文件组件single-file-components(SFCs)的格式来编写Vue组件。
+
+```js
+cnpm i -D vue-loader
+```
+
+前提得先安装vue这个框架：
+
+```js
+cnpm i -S vue
+```
+
+```json
+-D：--save-dev 生产环境的包 
+-S：--save     开发环境的包
+```
+
+需要注意的是，vue有不同的构建版本。基于构建工具时使用 **ES** **Module**，为打包工具提供的ESM，ESM格式被设计为可以被静态分析，所以打包工具可以利用这一点来进行“tree-shaking”并将用不到的代码排除出最终的包，为这些打包工具提供的默认文件是只有运行时的ES Module构建【vue.runtime.esm.js】
+
+在webpack中的配置：
+
+```json
+// webpack.config.js
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+module.exports = {
+  module: {
+    rules: [
+      // ... 其它规则
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
+    ]
+  },
+  plugins: [
+    // 请确保引入这个插件！
+    new VueLoaderPlugin()
+  ]
+}
+```
+
+**这个插件是必须的！** 它的职责是将你定义过的其它规则复制并应用到 `.vue` 文件里相应语言的块。例如，如果你有一条匹配 `/\.js$/` 的规则，那么它会应用到 `.vue` 文件里的 `<script>` 块。
