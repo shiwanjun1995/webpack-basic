@@ -1,6 +1,7 @@
 // 这个是开发环境下的配置
 // 设置强大的source map和devServer
 const path = require("path")
+console.log( path.join(__dirname));
 const merge = require("webpack-merge") // 引入公共环境下的配置文件
 const common = require("./webpack.common.js")
 
@@ -13,13 +14,18 @@ module.exports = function (env) {
             rules: [
                 // 解析css
                 {
-                    test: /\.css$/,
-                    use: ['style-loader','css-loader','postcss-loader']
+                    test: /\.(css|s[ac]ss)$/,
+                    use: [
+                        'style-loader', // 从js字符串创建style样式节点
+                        'css-loader',  // 将css编译成CommonJS
+                        'postcss-loader',
+                        'sass-loader', // 将sass编译成css
+                    ]
                 }
             ]
         },
         devServer: {
-            contentBase: path.join(__dirname, "dist"), // 告诉服务器从哪里提供内容(推荐使用绝对路径)
+            // contentBase: path.join(__dirname, "../dist"), // 告诉服务器从哪里提供内容(推荐使用绝对路径)
             compress: true, // 一切服务都启用gzip压缩
             disableHostCheck: false, // 避免主机受到DNS重新绑定的攻击
             hot: true, // 启用webpack的热模块替换特性(更新模块而不重新加载整个页面)

@@ -1,6 +1,9 @@
 // 这个是公共的打包配置(共享配置)
 // 设置入口和出口、开发和正式环境里需要用到的全部插件
-const path = require("path")
+const path = require("path"),
+      SRC_PATH = path.join(__dirname, '../src')
+    //   DIST_PATH = path.join(__dirname, '../dist')
+
 const HtmlWebpackPlugin = require("html-webpack-plugin") // 自动生成html的插件
 const { CleanWebpackPlugin } = require("clean-webpack-plugin") // 自动清理dist文件夹的插件
 const VueLoaderPlugin = require('vue-loader/lib/plugin') // 将定义过的其它规则复制并应用到.vue文件里相应的语言块
@@ -11,8 +14,9 @@ module.exports = function (env) {
     return {
         mode: 'development', // 开发模式
         entry: {
-            app: path.resolve(__dirname, './src/index.js'), // 入口文件
-            header: path.resolve(__dirname, './src/header.js'), // 再添加一个入口文件，形成多文件入口文件的格式
+            app: path.resolve(SRC_PATH, 'index.js'), // 入口文件
+            // return D:\Learnfolder\webpack4的学习\webpack-demo\src\index.js
+            // header: path.resolve(__dirname, './src/header.js'), // 再添加一个入口文件，形成多文件入口文件的格式
         },
         // 在低版本IE浏览器中兼容
         // entry: {
@@ -23,7 +27,7 @@ module.exports = function (env) {
         output: {
             // chunkhash只能用在生产环境不能用在开发环境
             filename: env.dev ? 'js/[name].js' : 'js/[name]-[contenthash:8].js', // 决定了每个输出bundle的名称 这些bundle将写入到 output.path选项指定的目录下
-            path: path.resolve(__dirname, './dist') // 目录对应一个绝对路径
+            path: path.resolve(__dirname, '../dist') // 目录对应一个绝对路径
         },
         // 模块规则(配置loader、解析器等选项) loader use 执行顺序从右到左 从下往上
         /**
@@ -58,7 +62,7 @@ module.exports = function (env) {
              * 例如，一些位于src/文件夹下的常用模块
             */
             alias: {
-                "@": path.resolve(__dirname, "./src"),
+                "@": path.resolve(SRC_PATH),
             },
         },
         // 用于以各种方式自定义webpack构建过程，并且webpack附带了各种内置插件
@@ -68,13 +72,13 @@ module.exports = function (env) {
                 filename: 'index.html', // 生成的文件名默认为 index.html
                 chunks: ['app'],
                 inject: true,
-                favicon: path.resolve(__dirname, './static/favicon.ico')   // 加上这个
+                favicon: path.resolve(__dirname, '../favicon.ico')   // 加上这个 用于webpack生成index.html时，自动把favicon.ico加入HTML中
             }),
-            new HtmlWebpackPlugin({
-                template: './header.html',
-                filename: 'header.html',
-                chunks: ['header'], // 与入口文件对应的模块名
-            }),
+            // new HtmlWebpackPlugin({
+            //     template: './header.html',
+            //     filename: 'header.html',
+            //     chunks: ['header'], // 与入口文件对应的模块名
+            // }),
             new CleanWebpackPlugin(),
             new VueLoaderPlugin(), // 将vue-loader应用到所有后缀名为.vue文件之上
         ],
@@ -82,7 +86,7 @@ module.exports = function (env) {
         devtool: env.dev ? 'cheap-module-eval-source-map' : 'none',
         // 此项配置是用来定制watch模式的选项(监听文件变化，当它们修改后会重新编译)
         watchOptions: {
-            ignored: path.resolve("./node_modules")
+            ignored: path.resolve("../node_modules")
         },
         // 外部扩展 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)。
         /**

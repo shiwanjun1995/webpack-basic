@@ -1,21 +1,18 @@
 <template>
-    <div id="app">
-        <div class="page">
-            <h1>hello 你好</h1>
-        </div>
+    <div>
+        <h1>
+            你好 Hello
+        </h1>
     </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  },
+    data() {
+        return {};
+    },
 };
 </script>
 
-<style lang='css' scoped>
-.page {
-    background-color: #fff;
-}
+<style lang='less' scoped>
 </style>

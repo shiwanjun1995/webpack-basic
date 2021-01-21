@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --env.dev --config webpack.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --env.prod --mode=production --config webpack.prod.js",
+    "start": "webpack-dev-server --env.dev --config build/webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --env.prod --mode=production --config build/webpack.prod.js",
     "http": "http-server dist"
   },
   "keywords": [],
@@ -24,6 +24,8 @@
     "http-server": "^0.12.3",
     "mini-css-extract-plugin": "^1.3.1",
     "postcss-loader": "^4.0.4",
+    "sass": "^1.32.4",
+    "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.1",
