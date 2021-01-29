@@ -4,6 +4,16 @@ import Vue from 'vue'
 import Hello from '@/components/Hello.vue'
 
 import login from '@/views/login/index.vue'
+import '@/assets/css/index.scss'
+
+// 引入elementUi
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI)
+
+// 引入iconfont
+// import '@/assets/iconfont/iconfont.js'
 
 new Vue({
     // 不需要编译器

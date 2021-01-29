@@ -417,7 +417,7 @@ module: {
 
 ### 6.1.加载和转译Vue组件
 
-vue-loader 是webpack的一个预处理器，它允许你以一种成为单文件组件single-file-components(SFCs)的格式来编写Vue组件。
+1.vue-loader 是webpack的一个预处理器，它允许你以一种成为单文件组件single-file-components(SFCs)的格式来编写Vue组件。
 
 ```js
 cnpm i -D vue-loader
@@ -433,6 +433,14 @@ cnpm i -S vue
 -D：--save-dev 生产环境的包 
 -S：--save     开发环境的包
 ```
+
+安装编译.vue组件里的template部分的编译器
+
+```js
+cnpm i -D vue-template-compiler
+```
+
+2.需要注意的是vue-template-compiler编译器的版本必须和基本的 `vue` 包保持同步，这样 `vue-loader` 就会生成兼容运行时的代码。
 
 需要注意的是，vue有不同的构建版本。基于构建工具时使用 **ES** **Module**，为打包工具提供的ESM，ESM格式被设计为可以被静态分析，所以打包工具可以利用这一点来进行“tree-shaking”并将用不到的代码排除出最终的包，为这些打包工具提供的默认文件是只有运行时的ES Module构建【vue.runtime.esm.js】
 
@@ -460,3 +468,45 @@ module.exports = {
 ```
 
 **这个插件是必须的！** 它的职责是将你定义过的其它规则复制并应用到 `.vue` 文件里相应语言的块。例如，如果你有一条匹配 `/\.js$/` 的规则，那么它会应用到 `.vue` 文件里的 `<script>` 块。
+
+3.vue-loader的作用就是：解析和转换.vue文件，提取出其中的逻辑代码 script、样式代码 style以及HTML模板template，再分别把他们交给对应的loader去处理。
+
+css-loader的作用就是：加载由vue-loader提取出的css代码。
+
+vue-template-compiler的作用就是：把vue-loader提取出的HTML模板编译成对应的可执行的js代码，这和react中的jsx语法被编译成js代码类似。预先编译好HTML模板相对于在浏览器中再去编译HTML模板的好处在于性能更好。
+
+总结：vue-loader的作用就是提取。
+
+### 6.2.path.join()和path.resolve()
+
+1.首先先说下文件路径的区别：
+
+- `/`代表的是根目录；
+- `./`代表的是当前目录；
+- `../`代表的是父级目录；
+
+这两个方法均属于path模块，先引入path模块:
+
+```js
+const path = require("path")
+```
+
+node.js中，__dirname表示的是当前被执行js文件的绝对路径，
+
+2.path.join()方法 使用平台特定的分隔符将所有给定的path片段连接到一起，并规范化生成的路径。
+
+```js
+const SRC_PATH = path.join(__dirname, '../src') // 定义src的路径
+```
+
+3.path.resolve()方法 把传入的路径或者路径片段解析为绝对路径
+
+七、安装elemnetUI
+
+```json
+cnpm i -S element-ui // 安装elementUi框架
+cnpm i -D babel-plugin-component // 安装该插件 支持按需引入 减小压缩包体积
+```
+
+
+

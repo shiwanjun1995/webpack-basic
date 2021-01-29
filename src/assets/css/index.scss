@@ -1,0 +1,6 @@
+// Normalize.css 只是一个很小的CSS文件，但它在默认的HTML元素样式上提供了跨浏览器的高度一致性。相比于传统的CSS reset，Normalize.css是一种现代的、为HTML5准备的优质替代方案。
+@import './modules/normalize.scss';
+// 基础公用的css文件
+@import './modules/common.scss';
+// 重写原有样式的文件
+@import './modules/reset.scss';

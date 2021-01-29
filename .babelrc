@@ -1,7 +1,3 @@
-// {
-//     "presets": ["@babel/preset-env"]
-// }
-
 {
     "presets": [ // 预设
         [
@@ -14,6 +10,15 @@
                 },
                 // 按需引入 减少打包后的JS文件
                 "useBuiltIns": "usage"
+            }
+        ]
+    ],
+    "plugins": [ // 插件
+        [
+            "component",
+            {
+                "libraryName": "element-ui",
+                "styleLibraryName": "theme-chalk"
             }
         ]
     ]
