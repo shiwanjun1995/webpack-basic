@@ -1,17 +1,17 @@
 //* 图形验证码组件
 <template>
-    <span class="s-canvas" @click="changeCode">
+    <div class="canvas-box" @click="changeCode">
         <canvas
-            id="s-canvas"
+            id="cont-canvas"
             :width="contentWidth"
             :height="contentHeight"
         ></canvas>
-    </span>
+    </div>
 </template>
 
 <script>
 export default {
-    name: "Code",
+    name: "img-verify",
     data() {
         return {
             identifyCode: "",
@@ -21,7 +21,7 @@ export default {
         identifyCodes: {
             //验证码从该字段中抽取生成
             type: String,
-            default: "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            default: "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
         },
         fontSizeMin: {
             // 字体最小值
@@ -33,26 +33,6 @@ export default {
             type: Number,
             default: 35,
         },
-        backgroundColorMin: {
-            // 验证码图片背景色最小值
-            type: Number,
-            default: 200,
-        },
-        backgroundColorMax: {
-            // 验证码图片背景色最大值
-            type: Number,
-            default: 220,
-        },
-        dotColorMin: {
-            // 背景干扰点最小值
-            type: Number,
-            default: 60,
-        },
-        dotColorMax: {
-            // 背景干扰点最大值
-            type: Number,
-            default: 120,
-        },
         contentWidth: {
             //容器宽度
             type: Number,
@@ -61,7 +41,7 @@ export default {
         contentHeight: {
             //容器高度
             type: Number,
-            default: 44,
+            default: 36,
         },
     },
     watch: {
@@ -86,21 +66,18 @@ export default {
             return "rgb(" + r + "," + g + "," + b + ")";
         },
         drawPic() {
-            let canvas = document.getElementById("s-canvas");
+            let canvas = document.getElementById("cont-canvas");
             let ctx = canvas.getContext("2d");
             ctx.textBaseline = "bottom";
             // 绘制背景
-            ctx.fillStyle = this.randomColor(
-                this.backgroundColorMin,
-                this.backgroundColorMax
-            );
+            ctx.fillStyle = '#FFF'
             ctx.fillRect(0, 0, this.contentWidth, this.contentHeight);
             // 绘制文字
             for (let i = 0; i < this.identifyCode.length; i++) {
                 this.drawText(ctx, this.identifyCode[i], i);
             }
-            this.drawLine(ctx);
-            this.drawDot(ctx);
+            // this.drawLine(ctx);
+            // this.drawDot(ctx);
         },
         drawText(ctx, txt, i) {
             ctx.fillStyle = this.randomColor(50, 160); //随机生成字体颜色
@@ -121,16 +98,17 @@ export default {
         },
         drawLine(ctx) {
             // 绘制干扰线
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < 60; i++) {
                 ctx.strokeStyle = this.randomColor(100, 200);
+                ctx.lineWidth = 0.5
                 ctx.beginPath();
                 ctx.moveTo(
                     this.randomNum(0, this.contentWidth),
                     this.randomNum(0, this.contentHeight)
                 );
                 ctx.lineTo(
-                    this.randomNum(0, this.contentWidth),
-                    this.randomNum(0, this.contentHeight)
+                    this.randomNum(this.contentWidth, 0),
+                    this.randomNum(this.contentHeight, 0)
                 );
                 ctx.stroke();
             }
@@ -159,12 +137,16 @@ export default {
             for (let i = 0; i < n; i++) {
                 this.identifyCode += e[this.randomNum(0, e.length)];
             }
+            // console.log("code = ", this.identifyCode);
             this.$emit("update:changeCode", this.identifyCode);
-        },
-        randomNum(min, max) {
-            return Math.floor(Math.random() * (max - min) + min);
         },
         /*切换验证码end*/
     },
 };
 </script>
+<style lang="scss" scoped>
+.canvas-box {
+    height: calc(100% - 4px);
+    padding: 2px 0 2px;
+}
+</style>

@@ -33,6 +33,7 @@
                     <svg class="icon el-input__icon" slot="prefix" aria-hidden="true">
                         <use xlink:href="#icon-yanzhengma1"></use>
                     </svg>
+                    <img-verify slot="suffix"></img-verify>
                 </el-input>
             </el-form-item>
             <el-form-item class="box-item">

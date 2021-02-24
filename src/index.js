@@ -6,6 +6,9 @@ import Hello from '@/components/Hello.vue'
 import login from '@/views/login/index.vue'
 import '@/assets/css/index.scss'
 
+// 全局注册的行为必须在根 Vue 实例 (通过 new Vue) 创建之前发生
+import '@/components/index.js'
+
 // 引入elementUi
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
