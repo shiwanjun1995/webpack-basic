@@ -11,7 +11,7 @@ import Vue from 'vue'
  * 参数3：匹配基础组件文件名的正则
  */
 const requireComponent = require.context('../components', true, /\.vue$/)
-console.log(requireComponent.keys());
+
 requireComponent.keys().forEach(fileName => {
     // 获取组件配置
     const componentConfig = requireComponent(fileName)

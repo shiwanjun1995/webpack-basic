@@ -31,13 +31,13 @@ module.exports = function (env) {
             hot: true, // 启用webpack的热模块替换特性(更新模块而不重新加载整个页面)
             // https: true, // 默认情况下通过HTTP提供服务，也可以选择带有HTTPS的提供服务
             open: true, // 自动打开浏览器
-            port: 8888, // 指定要监听请求的端口号
+            port: 9999, // 指定要监听请求的端口号
             clientLogLevel: "silent", // 关闭打包时 控制台上面的输出
             // 代理URL(可以在同域名下发送API请求)
             proxy: {
                 "/api": {
                     // 请求到 /api/users 会被代理到请求 http://localhost:8888/api/users
-                    target: "http://localhost:8888",
+                    target: "http://localhost:9999",
                     // 默认情况下不接受运行在https上，且使用了无效证书的后端服务器，想要接受的话可以开启
                     secure: true,
                     // 省去传递/api的前缀 重写路径
