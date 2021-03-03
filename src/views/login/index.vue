@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import INTERFACE from '@/api/interface.js'
 export default {
     data() {
         return {
@@ -64,17 +65,22 @@ export default {
     },
     methods: {
         onChangePassword() {
-            console.log('❤️❤️',this.isPassword);
             this.isPassword = ! this.isPassword
         },
         // 加上表单校验 两个要素：通过rules属性传入验证规则，并添加form-item每项的prop属性名。
         onClickSubmit() {
             this.$refs.form.validate(v => v && this.handleLogin())
         },
-        handleLogin() {
+        async handleLogin() {
             this.loadingLogin = true
-            this.$router.push({ path: '/welcome' })
+            let res = await INTERFACE.login(this.form)
             this.loadingLogin = false
+            if (!res.data) {
+                this.$message.error('用户名或密码错误！')
+                return false
+            } else {
+                this.$router.push({ path: '/welcome' })
+            }
         },
     },
 };

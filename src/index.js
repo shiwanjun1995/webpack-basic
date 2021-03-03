@@ -24,6 +24,9 @@ import router from '@/router/index.js'
 // 引入iconfont
 // import '@/assets/iconfont/iconfont.js'
 
+// 引入mock模拟本地数据
+import '@/mock/index.js'
+
 new Vue({
     el: '#app',
     router,
