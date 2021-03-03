@@ -2,6 +2,8 @@
 @import './modules/normalize.scss';
 // 重置掉一些样式
 @import './modules/reset.scss';
+// 颜色变量等配置样式
+@import './modules/config.scss';
 // 基础公用的css文件
 @import './modules/common.scss';
 // 重写原有样式的文件

@@ -27,14 +27,14 @@
                     </el-button>
                 </el-input>
             </el-form-item>
-            <el-form-item class="box-item" prop="identifyCode">
+            <el-form-item class="box-item" prop="userVerifyCode">
                 <el-input
                     placeholder="验证码"
-                    v-model="form.identifyCode">
+                    v-model="form.userVerifyCode">
                     <svg class="icon el-input__icon" slot="prefix" aria-hidden="true">
                         <use xlink:href="#icon-yanzhengma1"></use>
                     </svg>
-                    <img-verify slot="suffix"></img-verify>
+                    <img-verify slot="suffix" :changeCode.sync='verifyCode'></img-verify>
                 </el-input>
             </el-form-item>
             <el-form-item class="box-item">
@@ -45,25 +45,40 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import INTERFACE from '@/api/interface.js'
 export default {
     data() {
+        const checkCode = (rule, value, callback) => {
+            if(!value) {
+                return callback(new Error('请输入'))
+            } else {
+                if (this.verifyCode.toLowerCase() !== this.form.userVerifyCode.toLowerCase()) {
+                    return callback(new Error('请输入正确的验证码！'))
+                } else {
+                    callback()
+                }
+            }
+        }
         return {
+            verifyCode: '',
             form: {
                 userName: '',
                 userPassword: '',
-                identifyCode: '',
+                userVerifyCode: '',
             },
             rule: {
                 userName: [ { required: true, message: '请输入', trigger: 'blur' }],
                 userPassword: [ { required: true, message: '请输入', trigger: 'blur' }],
-                identifyCode: [ { required: true, message: '请输入', trigger: 'blur' }],
+                userVerifyCode: [ { validator: checkCode, trigger: 'blur' }],
             },
             isPassword: true,
             loadingLogin: false,
         };
     },
     methods: {
+        ...mapMutations(['setUser']),
+
         onChangePassword() {
             this.isPassword = ! this.isPassword
         },
@@ -79,6 +94,8 @@ export default {
                 this.$message.error('用户名或密码错误！')
                 return false
             } else {
+                console.log('❤️❤️',res.data);
+                this.setUser(res.data)
                 this.$router.push({ path: '/welcome' })
             }
         },

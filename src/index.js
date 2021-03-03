@@ -6,7 +6,6 @@ import VueRouter from 'vue-router'
 import Hello from '@/components/Hello.vue'
 import App from '@/App.vue'
 
-import login from '@/views/login/index.vue'
 import '@/assets/css/index.scss'
 
 // 全局注册的行为必须在根 Vue 实例 (通过 new Vue) 创建之前发生
@@ -27,9 +26,15 @@ import router from '@/router/index.js'
 // 引入mock模拟本地数据
 import '@/mock/index.js'
 
+// 引入vuex
+import store from '@/store/index.js'
+
+// 引入layout
+// import layout from '@/views/layout/index.vue'
 new Vue({
     el: '#app',
     router,
+    store,
     // 不需要编译器
     render: h => h(App)
 

@@ -18,7 +18,57 @@ const users = [
         token: 'abcdefghijklmnopqrstuvwxyz',
         description: '超级管理员，具备所有页面的权限',
         rolename: 'ADMIN',
-        rights: [],
+        rights: [
+            {
+                id: 11,
+                authName: '一级菜单',
+                icon: 'el-icon-connection',
+                children: [
+                    {
+                        id: 111,
+                        authName: '一级项目1',
+                        icon: 'el-icon-s-grid',
+                        path: '/menu/one',
+                        rights: ['view', 'edit', 'add', 'delete']
+                    },
+                    {
+                        id: 112,
+                        authName: '一级项目2',
+                        icon: 'el-icon-s-marketing',
+                        path: '/menu/two',
+                        rights: ['view', 'edit', 'add', 'delete']
+                    }
+                ]
+            },
+            {
+                id: 22,
+                authName: '二级菜单',
+                icon: 'el-icon-set-up',
+                children: [
+                    {
+                        id: 221,
+                        authName: '二级项目1',
+                        icon: 'el-icon-s-custom',
+                        path: '/menu/three',
+                        rights: ['view', 'edit', 'add', 'delete']
+                    },
+                    {
+                        id: 222,
+                        authName: '二级项目2',
+                        icon: 'el-icon-s-custom',
+                        path: '/menu/four',
+                        rights: ['view', 'edit', 'add', 'delete']
+                    },
+                    {
+                        id: 223,
+                        authName: '二级项目2',
+                        icon: 'el-icon-s-custom',
+                        path: '/menu/five',
+                        rights: ['view', 'edit', 'add', 'delete']
+                    },
+                ]
+            },
+        ],
     },
     {
         id: 2,
@@ -27,78 +77,31 @@ const users = [
         token: 'abcdefghijklmnopqrstuvwxyz'.split('').reverse().join(''),
         description: '游客，仅仅具备查看所有页面的权限',
         rolename: 'VISITOR',
-        rights: [],
+        rights: [
+            {
+                id: 11,
+                authName: '一级菜单',
+                icon: 'el-icon-connection',
+                children: [
+                    {
+                        id: 111,
+                        authName: '一级项目1',
+                        icon: 'el-icon-s-grid',
+                        path: '/menu/one',
+                        rights: ['view']
+                    },
+                    {
+                        id: 112,
+                        authName: '一级项目2',
+                        icon: 'el-icon-s-marketing',
+                        path: '/menu/two',
+                        rights: ['view', 'edit', 'add', 'delete']
+                    }
+                ]
+            },
+        ],
     },
 ]
-
-/**
- * 权限信息
- * 将权限信息从用户信息中抽离出来 不同身份对应不同的路由信息
- * 便于后期维护 否则以后每添加一个页面就需要在用户信息中做修改 十分不便 如果用户一多 维护起来很麻烦
- * 将用户直接分为不同的身份 然后对不同身份做处理
-*/
-const roles = {
-    visitor: [
-        {
-            id: 11,
-            authName: '一级菜单',
-            icon: 'el-icon-connection',
-            children: [
-                {
-                    id: 111,
-                    authName: '表格页面',
-                    icon: 'el-icon-s-grid',
-                    path: 'table',
-                    rights: ['view']
-                },
-                {
-                    id: 112,
-                    authName: '素材页面',
-                    icon: 'el-icon-s-marketing',
-                    path: 'image',
-                    rights: ['view']
-                }
-            ]
-        }
-    ],
-    admin: [
-        {
-            id: 11,
-            authName: '一级菜单',
-            icon: 'el-icon-connection',
-            children: [
-                {
-                    id: 111,
-                    authName: '表格页面',
-                    icon: 'el-icon-s-grid',
-                    path: 'table',
-                    rights: ['view', 'edit', 'add', 'delete']
-                },
-                {
-                    id: 112,
-                    authName: '素材页面',
-                    icon: 'el-icon-s-marketing',
-                    path: 'image',
-                    rights: ['view', 'edit', 'add', 'delete']
-                }
-            ]
-        },
-        {
-            id: 22,
-            authName: '用户权限',
-            icon: 'el-icon-set-up',
-            children: [
-                {
-                    id: 221,
-                    authName: '权限页面',
-                    icon: 'el-icon-s-custom',
-                    path: 'users',
-                    rights: ['view', 'edit', 'add', 'delete']
-                }
-            ]
-        },
-    ]
-}
 
 /**
  * Mock.mock( rurl, rtype, function( options ) )
@@ -116,13 +119,3 @@ Mock.mock('/login', 'post', options => {
     })
     return user
 })
-
-var data = Mock.mock({
-    // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-    'list|1-10': [{
-        // 属性 id 是一个自增数，起始值为 1，每次增 1
-        'id|+1': 1
-    }]
-})
-// 输出结果
-console.log(JSON.stringify(data, null, 4))
