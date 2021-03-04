@@ -7,9 +7,9 @@
         <div class="bar-right">
             <div class="item">
                 <i class="el-icon-user"></i>
-                <span>管理员</span>
+                <span>{{ user.username }}</span>
             </div>
-            <div class="item">
+            <div class="item" @click="onClickLogOut">
                 <i class="el-icon-switch-button"></i>
                 <span>退出登录</span>
             </div>
@@ -18,11 +18,33 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     data () {
         return {
         }
-    }
+    },
+    computed: {
+        ...mapState(['user'])
+    },
+    methods: {
+        onClickLogOut() {
+            this.$confirm('是否确认退出?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                setTimeout(() => {
+                    this.$router.push('/login')
+                }, 500);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消'
+                })
+            })
+        },
+    },
 }
 </script>
 

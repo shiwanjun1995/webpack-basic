@@ -36,8 +36,7 @@ new Vue({
     router,
     store,
     // 不需要编译器
-    render: h => h(App)
-
+    render: h => h(App),
     // 需要编译器 (挂载到一个元素上并以其 DOM 内部的 HTML 作为模板))
     // template: '<Hello></Hello>'
 }).$mount('#app')

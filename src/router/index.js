@@ -37,6 +37,9 @@ const router = new VueRouter({
                 {
                     path: '/login',
                     component: () => import('@/views/pages/login/index.vue'),
+                    meta: {
+                        hideBar: true
+                    },
                 },
             ]
         },

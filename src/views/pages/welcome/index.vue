@@ -1,7 +1,7 @@
 //*欢迎组件
 <template>
-    <div class="welcome-container">
-        <h1>欢迎进入我的后台系统</h1>
+    <div class="page">
+        <h1>欢迎进入大🐖🐖的后台系统</h1>
     </div>
 </template>
 
@@ -22,9 +22,3 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.welcome-container {
-    height: 100%;
-    background-color: #fc0;
-}
-</style>
