@@ -1,13 +1,12 @@
 <template>
     <div class="header-bar">
-        <div class="bar-left">
-            <i class="el-icon-s-fold"></i>
-            <!-- <i class="el-icon-s-unfold"></i> -->
+        <div class="bar-left" @click="onSwitchCollapse">
+            <i :class="$isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'"></i>
         </div>
         <div class="bar-right">
             <div class="item">
                 <i class="el-icon-user"></i>
-                <span>{{ user.username }}</span>
+                <span>{{ $user.username }}</span>
             </div>
             <div class="item" @click="onClickLogOut">
                 <i class="el-icon-switch-button"></i>
@@ -18,16 +17,21 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
     data () {
         return {
         }
     },
     computed: {
-        ...mapState(['user'])
+        ...mapState(['$isCollapse', '$user'])
     },
     methods: {
+        ...mapMutations(['switchCollapse']),
+
+        onSwitchCollapse() {
+            this.switchCollapse(!this.$isCollapse)
+        },
         onClickLogOut() {
             this.$confirm('是否确认退出?', '提示', {
                 confirmButtonText: '确定',

@@ -1,7 +1,7 @@
 <template>
     <div class="layout-wrapper">
         <el-container>
-            <el-aside v-if="!$route.meta.hideBar">
+            <el-aside v-if="!$route.meta.hideBar" :style="{ width: $isCollapse? '64px' : '200px' }">
                 <v-aside></v-aside>
             </el-aside>
             <el-container>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import vHeader from './header.vue'
 import vAside from './aside.vue'
 export default {
@@ -29,7 +30,10 @@ export default {
     data () {
         return {
         }
-    }
+    },
+    computed: {
+        ...mapState(['$isCollapse'])
+    },
 }
 </script>
 
@@ -39,8 +43,11 @@ export default {
     height: 100%;
 }
 .el-aside {
-    width: 200px !important;
-    background-color: #eee;
+    // width: 200px !important;
+    // background-color: #eee;
+}
+.el-header {
+    height: 40px !important;
 }
 .el-main {
     padding: 0px;

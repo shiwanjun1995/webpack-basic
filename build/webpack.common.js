@@ -45,7 +45,11 @@ module.exports = function (env) {
                     use: ['babel-loader?cacheDirectory'] // 将babel-loader提速至少两倍，将转译的结果缓存到文件系统中 将使用默认的缓存目录(node_modules/.cache/babel-loader)
                 },
                 { test: /\.vue$/, use: ['vue-loader'] }, //解析后缀为.vue文件
-                { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] }, // 解析图片
+                /**
+                 * 在url-loader内部封装了file-loader 而file-loader在新版本中esModule属性默认为true 即默认使用ES模块语法
+                 * 导致了造成了引用图片文件的方式和以前的版本不一样 引入路径改变了 自然找不到图片
+                */
+                { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader?esModule=false'] }, // 解析图片
                 { test: /.(woff|woff2|eot|ttf|otf)$/, use: ['url-loader'] }, // 解析字体
             ]
         },

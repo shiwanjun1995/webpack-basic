@@ -6,19 +6,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
     data () {
         return {
         }
     },
-    computed: {
-        ...mapState(['user'])
-    },
-    created() {
-        console.log('✔️✔️✔️',this.user);
-    },
 }
 </script>
-
+<style lang="scss" scoped>
+h1 {
+    text-shadow: 10px 10px rgba(201, 165, 165, 0.3);
+}
+</style>

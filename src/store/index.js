@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        user: {},
+        $user: {},
+        $isCollapse: false,
     },
     mutations: {
         setUser(state, data) {
-            state.user = data
+            state.$user = data
+        },
+        switchCollapse(state, boolean) {
+            state.$isCollapse = boolean
         },
     },
     actions: {},
