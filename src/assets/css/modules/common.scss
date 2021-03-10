@@ -16,7 +16,51 @@ html,body {
 .page {
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-flow: column nowrap;
     background-color: #f0f3f4;
+    .page-filter {
+        padding: 20px 20px 0px;
+        background-color: #fff;
+        border-top: 1px solid #dcdfe6;
+        border-bottom: 1px solid #dcdfe6;
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+        }
+    }
+    .page-content {
+        height: 100%;
+        flex: 1;
+        margin: 20px;
+        overflow: hidden;
+        background-color: #fff;
+        .table-wrapper {
+            height: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+            .table-box {
+                flex: 1;
+            }
+            .pagination-box {
+                height: 32px;
+                margin: 5px auto;
+            }
+        }
+    }
+    .page-dialog {
+        .el-dialog__wrapper.w-600 .el-dialog {
+            width: 600px;
+        }
+        .el-dialog__header {
+            padding: 20px 20px 0px;
+        }
+        .el-dialog__body {
+            padding: 20px;
+        }
+        .el-dialog__footer {
+            text-align: center;
+        }
+    }
 }
