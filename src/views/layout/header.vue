@@ -5,6 +5,9 @@
         </div>
         <div class="bar-right">
             <div class="item">
+                <el-image :src="$user.userpic"></el-image>
+            </div>
+            <div class="item">
                 <i class="el-icon-user"></i>
                 <span>{{ $user.username }}</span>
             </div>
@@ -39,6 +42,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 setTimeout(() => {
+                    sessionStorage.setItem('login','no')
                     this.$router.push('/login')
                 }, 500);
             }).catch(() => {
@@ -66,6 +70,7 @@ export default {
     }
     .bar-right {
         display: inline-flex;
+        align-items: center;
         .item {
             margin: 0 5px;
             &:nth-last-of-type(1) {
@@ -76,6 +81,10 @@ export default {
             }
             i {
                 font-size: 16px;
+            }
+            .el-image {
+                width: 24px;
+                height: 24px;
             }
         }
     }

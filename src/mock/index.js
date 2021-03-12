@@ -61,6 +61,7 @@ const users = [
     {
         id: 1,
         username: 'admin',
+        userpic: 'https://i.loli.net/2021/03/12/83l5mSiFdwY7VNr.jpg',
         password: 'admin',
         token: 'abcdefghijklmnopqrstuvwxyz',
         description: '超级管理员，具备所有页面的权限',
@@ -120,6 +121,7 @@ const users = [
     {
         id: 2,
         username: 'visitor',
+        userpic: 'https://i.loli.net/2021/03/12/6g5Htir3YwBySCe.png',
         password: 'visitor',
         token: 'abcdefghijklmnopqrstuvwxyz'.split('').reverse().join(''),
         description: '游客，仅仅具备查看所有页面的权限',

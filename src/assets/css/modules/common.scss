@@ -10,7 +10,6 @@ html,body {
     fill: currentColor;
     overflow: hidden;
     // font-size: 16px;
-
 }
 
 .page {
@@ -42,6 +41,7 @@ html,body {
             flex-flow: column nowrap;
             .table-box {
                 flex: 1;
+                overflow: hidden;
             }
             .pagination-box {
                 height: 32px;

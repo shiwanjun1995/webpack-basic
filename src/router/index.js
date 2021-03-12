@@ -50,5 +50,22 @@ const router = new VueRouter({
     ]
 })
 
+router.beforeEach((to, from, next) => {
+    if (sessionStorage.getItem('login') === 'yes') {
+        next()
+    } else {
+        if (to.path == '/login') {
+            next()
+        } else {
+            next({ path: '/login' })
+        }
+    }
+})
+
+// 解决 重复点击路由出现的控制台报错 禁止全局的路由错误处理
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 
 export default router

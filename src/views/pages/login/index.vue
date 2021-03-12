@@ -94,8 +94,8 @@ export default {
                 this.$message.error('用户名或密码错误！')
                 return false
             } else {
-                console.log('❤️❤️',res.data);
                 this.setUser(res.data)
+                sessionStorage.setItem('login','yes');
                 this.$router.push({ path: '/welcome' })
             }
         },
