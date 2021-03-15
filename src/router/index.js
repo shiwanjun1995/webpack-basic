@@ -48,7 +48,7 @@ router.$addRoutes = (params) => {
 export const initDynamicRouter = () => {
     const routes =  router.options.routes
     const route = routes.find(item => item.name === 'layout')
-    const menus= store.state.$user.menus
+    const { menus = [] } = store.state.$user
     // 根据二级权限 对路由规则进行动态添加
     menus.forEach(i => {
         i.children.forEach(j => {
