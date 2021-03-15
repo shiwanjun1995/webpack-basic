@@ -30,9 +30,9 @@
    `npm run start`
 
 6. 效果图：
-    <img src="https://i.loli.net/2021/03/15/ag3jq4xtKecJvDy.png">
-   <img src="https://i.loli.net/2021/03/15/LOTDc8dI3SbfRui.png" />
-   <img src="https://i.loli.net/2021/03/15/N6KjXZqv1eSF2mp.png">
+    <img src="https://i.loli.net/2021/03/15/ag3jq4xtKecJvDy.png" />
+    <img src="https://i.loli.net/2021/03/15/LOTDc8dI3SbfRui.png" />
+    <img src="https://i.loli.net/2021/03/15/N6KjXZqv1eSF2mp.png" />
 
 ### 三：基本实现
 
