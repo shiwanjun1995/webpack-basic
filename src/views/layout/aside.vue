@@ -6,23 +6,6 @@
         </div>
         <el-scrollbar>
             <el-menu class="el-menu-vertical" :collapse="$isCollapse">
-                <!-- <el-submenu index="1">
-                    <template slot="title">
-                        <i class="el-icon-menu c1"></i>
-                        <span slot="title">导航一</span>
-                    </template>
-                    <el-menu-item @click="$router.push({ path: '/menu/one', query: { name: '菜单栏1' }})">菜单栏1</el-menu-item>
-                    <el-menu-item @click="$router.push({ path: '/menu/two', query: { name: '菜单栏2' }})">菜单栏2</el-menu-item>
-                    <el-menu-item @click="$router.push({ path: '/menu/three', query: { name: '菜单栏3' }})">菜单栏3</el-menu-item>
-                </el-submenu>
-                <el-submenu index="2">
-                    <template slot="title">
-                        <i class="el-icon-document c2"></i>
-                        <span slot="title">导航二</span>
-                    </template>
-                    <el-menu-item @click="$router.push({ path: '/menu/four', query: { name: '菜单栏4' }})">菜单栏4</el-menu-item>
-                    <el-menu-item @click="$router.push({ path: '/menu/five', query: { name: '菜单栏5' }})">菜单栏5</el-menu-item>
-                </el-submenu> -->
                 <el-submenu v-for="(item, index) in menuList" :key="index" :index="`${item.id}`">
                     <template slot="title">
                        <i :class="item.icon"></i>
@@ -63,7 +46,6 @@ export default {
             for (let i = 0; i < this.menuList.length; i++) {
                 const className = classObj[i]
                 this.menuList[i].icon = `${this.menuList[i].icon} ${className}`
-
             }
         }
     },
