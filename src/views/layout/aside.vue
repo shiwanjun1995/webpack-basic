@@ -6,7 +6,7 @@
         </div>
         <el-scrollbar>
             <el-menu class="el-menu-vertical" :collapse="$isCollapse">
-                <el-submenu index="1">
+                <!-- <el-submenu index="1">
                     <template slot="title">
                         <i class="el-icon-menu c1"></i>
                         <span slot="title">导航一</span>
@@ -22,6 +22,16 @@
                     </template>
                     <el-menu-item @click="$router.push({ path: '/menu/four', query: { name: '菜单栏4' }})">菜单栏4</el-menu-item>
                     <el-menu-item @click="$router.push({ path: '/menu/five', query: { name: '菜单栏5' }})">菜单栏5</el-menu-item>
+                </el-submenu> -->
+                <el-submenu v-for="(item, index) in menuList" :key="index" :index="`${item.id}`">
+                    <template slot="title">
+                       <i :class="item.icon"></i>
+                       <span slot="title">{{ item.authName }}</span>
+                    </template>
+                    <el-menu-item v-for="(itemC, indexC) in item.children" :key="indexC" :index="`${itemC.id}`"
+                        @click="$router.push({ path: itemC.path, query: { name: itemC.authName } })">
+                        {{ itemC.authName }}
+                    </el-menu-item>
                 </el-submenu>
             </el-menu>
         </el-scrollbar>
@@ -33,13 +43,29 @@ import { mapState } from 'vuex'
 export default {
     data() {
         return {
+            menuList: []
         };
     },
     computed: {
-        ...mapState(['$isCollapse'])
+        ...mapState(['$isCollapse', '$user'])
+    },
+    created() {
+        this.setMenuIcon()
     },
     methods: {
+        setMenuIcon() {
+            this.menuList = this.$user.menus
+            const classObj = {
+                0: 'c1',
+                1: 'c2',
+                2: 'c3',
+            }
+            for (let i = 0; i < this.menuList.length; i++) {
+                const className = classObj[i]
+                this.menuList[i].icon = `${this.menuList[i].icon} ${className}`
 
+            }
+        }
     },
 };
 </script>

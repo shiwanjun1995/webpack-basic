@@ -2,7 +2,7 @@
     <div class="page">
         <div class="page-filter">
             <div class="left">
-                <el-button type="primary" size="small" icon="el-icon-plus" @click="onClickAdd">新增</el-button>
+                <el-button v-permit="{action: 'add'}" type="primary" size="small" icon="el-icon-plus" @click="onClickAdd">新增</el-button>
             </div>
             <div class="right">
                 <el-form inline :model="filterModel" size="small">
@@ -16,7 +16,7 @@
                         <el-input  v-model="filterModel.likes" clearable></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" icon="el-icon-search" @click="onClickSearch">查询</el-button>
+                        <el-button v-permit="{action: 'search', effect: 'disabled'}" type="primary" icon="el-icon-search" @click="onClickSearch">查询</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -71,10 +71,10 @@
                             width="200">
                             <template slot-scope="scope">
                                 <div class="btns">
-                                    <el-button size="small" @click="onClickUpdate(scope.row)">
+                                    <el-button v-permit="{action: 'edit', effect: 'disabled'}" size="small" @click="onClickUpdate(scope.row)">
                                         <i class="el-icon-edit-outline"></i>
                                     </el-button>
-                                    <el-button size="small" type="danger" plain @click="onClickDelete(scope.row)">
+                                    <el-button v-permit="{action: 'delete', effect: 'disabled'}" size="small" type="danger" plain @click="onClickDelete(scope.row)">
                                         <i class="el-icon-delete"></i>
                                     </el-button>
                                 </div>

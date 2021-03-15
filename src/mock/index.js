@@ -37,7 +37,7 @@ Mock.Random.extend({
         '四川成都市中德英伦联邦C区',
         '北京市中南海老四合院靠左',
         '安徽省安庆市宿松县许岭镇',
-        '上海市浦东新区咪咕视频',
+        '上海市浦东新区云桥路',
         '上海市浦东新区金桥经济开发区金港路766号',
         '上海市浦东新区唐镇小湾村',
       ]
@@ -66,53 +66,48 @@ const users = [
         token: 'abcdefghijklmnopqrstuvwxyz',
         description: '超级管理员，具备所有页面的权限',
         rolename: 'ADMIN',
-        rights: [
+        menus: [
             {
                 id: 11,
                 authName: '一级菜单',
-                icon: 'el-icon-connection',
+                icon: 'el-icon-menu',
                 children: [
                     {
                         id: 111,
                         authName: '一级项目1',
-                        icon: 'el-icon-s-grid',
                         path: '/menu/one',
-                        rights: ['view', 'edit', 'add', 'delete']
+                        rights: ['view', 'add', 'delete', 'edit', 'search']
                     },
                     {
                         id: 112,
                         authName: '一级项目2',
-                        icon: 'el-icon-s-marketing',
                         path: '/menu/two',
-                        rights: ['view', 'edit', 'add', 'delete']
+                        rights: ['view', 'add', 'delete', 'edit', 'search']
                     }
                 ]
             },
             {
                 id: 22,
                 authName: '二级菜单',
-                icon: 'el-icon-set-up',
+                icon: 'el-icon-document',
                 children: [
                     {
                         id: 221,
                         authName: '二级项目1',
-                        icon: 'el-icon-s-custom',
                         path: '/menu/three',
-                        rights: ['view', 'edit', 'add', 'delete']
+                        rights: ['view', 'add', 'delete', 'edit', 'search']
                     },
                     {
                         id: 222,
                         authName: '二级项目2',
-                        icon: 'el-icon-s-custom',
                         path: '/menu/four',
-                        rights: ['view', 'edit', 'add', 'delete']
+                        rights: ['view', 'add', 'delete', 'edit', 'search']
                     },
                     {
                         id: 223,
                         authName: '二级项目2',
-                        icon: 'el-icon-s-custom',
                         path: '/menu/five',
-                        rights: ['view', 'edit', 'add', 'delete']
+                        rights: ['view', 'add', 'delete', 'edit', 'search']
                     },
                 ]
             },
@@ -126,25 +121,23 @@ const users = [
         token: 'abcdefghijklmnopqrstuvwxyz'.split('').reverse().join(''),
         description: '游客，仅仅具备查看所有页面的权限',
         rolename: 'VISITOR',
-        rights: [
+        menus: [
             {
                 id: 11,
                 authName: '一级菜单',
-                icon: 'el-icon-connection',
+                icon: 'el-icon-menu',
                 children: [
                     {
                         id: 111,
                         authName: '一级项目1',
-                        icon: 'el-icon-s-grid',
                         path: '/menu/one',
                         rights: ['view']
                     },
                     {
                         id: 112,
                         authName: '一级项目2',
-                        icon: 'el-icon-s-marketing',
                         path: '/menu/two',
-                        rights: ['view', 'edit', 'add', 'delete']
+                        rights: ['view', 'add', 'delete', 'edit', 'search']
                     }
                 ]
             },

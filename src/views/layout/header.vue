@@ -44,6 +44,7 @@ export default {
                 setTimeout(() => {
                     sessionStorage.setItem('login','no')
                     this.$router.push('/login')
+                    // window.location.reload()
                 }, 500);
             }).catch(() => {
                 this.$message({

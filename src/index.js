@@ -11,6 +11,9 @@ import '@/assets/css/index.scss'
 // 全局注册的行为必须在根 Vue 实例 (通过 new Vue) 创建之前发生
 import '@/components/index.js'
 
+// 引入自定义指令
+import '@/directive/index.js'
+
 // 引入elementUi
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'

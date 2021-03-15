@@ -46,6 +46,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { initDynamicRouter } from '@/router/index.js'
 import INTERFACE from '@/api/interface.js'
 export default {
     data() {
@@ -95,6 +96,7 @@ export default {
                 return false
             } else {
                 this.setUser(res.data)
+                initDynamicRouter()
                 sessionStorage.setItem('login','yes');
                 this.$router.push({ path: '/welcome' })
             }
