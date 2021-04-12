@@ -9,7 +9,7 @@
 
 1. 克隆项目
 
-   `git clone git@github.com:Aizener/admin-permission.git`
+   `git@github.com:shiwanjun1995/webpack-basic.git`
 
    这个直接会把基础模板和完整的模板都克隆下来的，develop的是基础模板，master的完整模板。
 
